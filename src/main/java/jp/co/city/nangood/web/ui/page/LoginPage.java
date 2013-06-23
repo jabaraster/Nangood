@@ -92,7 +92,7 @@ public class LoginPage extends WebPageBase {
 
     private StatelessForm<?> getForm() {
         if (this.form == null) {
-            this.form = new StatelessForm<Object>("form"); //$NON-NLS-1$
+            this.form = new StatelessForm<>("form"); //$NON-NLS-1$
             this.form.add(getUserId());
             this.form.add(getUserIdFeedback());
             this.form.add(getPassword());
@@ -136,7 +136,7 @@ public class LoginPage extends WebPageBase {
 
     private TextField<String> getUserId() {
         if (this.userId == null) {
-            this.userId = new TextField<String>("userId", Model.of(Empty.STRING)); //$NON-NLS-1$
+            this.userId = new TextField<>("userId", Model.of(Empty.STRING)); //$NON-NLS-1$
             this.userId.setRequired(true);
         }
         return this.userId;

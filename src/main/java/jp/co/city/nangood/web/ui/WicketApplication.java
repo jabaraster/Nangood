@@ -6,6 +6,7 @@ import jabara.wicket.MarkupIdForceOutputer;
 import jp.co.city.nangood.service.IAuthenticationService;
 import jp.co.city.nangood.web.ui.page.LoginPage;
 import jp.co.city.nangood.web.ui.page.LogoutPage;
+import jp.co.city.nangood.web.ui.page.NangoodPage;
 import jp.co.city.nangood.web.ui.page.RestrictedPageBase;
 import jp.co.city.nangood.web.ui.page.TopPage;
 
@@ -108,5 +109,6 @@ public class WicketApplication extends WebApplication {
     private void mountPages() {
         this.mountPage("login", LoginPage.class); //$NON-NLS-1$
         this.mountPage("logout", LogoutPage.class); //$NON-NLS-1$
+        this.mountPage("nangood", NangoodPage.class); //$NON-NLS-1$
     }
 }

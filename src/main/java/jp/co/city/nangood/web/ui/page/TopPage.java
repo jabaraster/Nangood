@@ -1,18 +1,19 @@
 package jp.co.city.nangood.web.ui.page;
 
-import jp.co.city.nangood.Environment;
-
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.List;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.extensions.ajax.markup.html.IndicatingAjaxLink;
+import javax.inject.Inject;
+
+import jp.co.city.nangood.entity.ESession;
+import jp.co.city.nangood.service.ISessionService;
+
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
@@ -21,22 +22,26 @@ import org.apache.wicket.model.Model;
  */
 @SuppressWarnings("synthetic-access")
 public class TopPage extends RestrictedPageBase {
-    private static final long serialVersionUID = -4965903336608758671L;
+    private static final long       serialVersionUID = -4965903336608758671L;
 
-    private final Handler     handler          = new Handler();
+    private final Handler           handler          = new Handler();
 
-    private Label             applicationName;
-    private Label             now;
-    private AjaxLink<?>       reloader;
-    private Link<?>           goLogout;
+    @Inject
+    private ISessionService         sessionService;
+
+    private final List<ESession>    sessionsValue;
+
+    private BookmarkablePageLink<?> goNewSession;
+    private ListView<ESession>      sessions;
+    private Link<?>                 goLogout;
 
     /**
      * 
      */
     public TopPage() {
-        this.add(getApplicationName());
-        this.add(getNow());
-        this.add(getReloader());
+        this.sessionsValue = this.sessionService.getAll();
+        this.add(getGoNewSession());
+        this.add(getSessions());
         this.add(getGoLogout());
     }
 
@@ -48,52 +53,38 @@ public class TopPage extends RestrictedPageBase {
         return Model.of("Top"); //$NON-NLS-1$
     }
 
-    private Label getApplicationName() {
-        if (this.applicationName == null) {
-            this.applicationName = new Label("applicationName", Model.of(Environment.getApplicationName())); //$NON-NLS-1$
-        }
-        return this.applicationName;
-    }
-
     private Link<?> getGoLogout() {
         if (this.goLogout == null) {
-            this.goLogout = new BookmarkablePageLink<Object>("goLogout", LogoutPage.class); //$NON-NLS-1$
+            this.goLogout = new BookmarkablePageLink<>("goLogout", LogoutPage.class); //$NON-NLS-1$
         }
         return this.goLogout;
     }
 
-    @SuppressWarnings({ "serial", "nls" })
-    private Label getNow() {
-        if (this.now == null) {
-            this.now = new Label("now", new AbstractReadOnlyModel<String>() {
-                @Override
-                public String getObject() {
-                    return new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime()); //$NON-NLS-1$
-                }
-            });
+    private BookmarkablePageLink<?> getGoNewSession() {
+        if (this.goNewSession == null) {
+            this.goNewSession = new BookmarkablePageLink<>("goNewSession", SessionEditorPage.class); //$NON-NLS-1$
         }
-        return this.now;
+        return this.goNewSession;
     }
 
     @SuppressWarnings("serial")
-    private AjaxLink<?> getReloader() {
-        if (this.reloader == null) {
-            this.reloader = new IndicatingAjaxLink<Object>("reloader") { //$NON-NLS-1$
+    private ListView<ESession> getSessions() {
+        if (this.sessions == null) {
+            this.sessions = new ListView<ESession>("sessions", this.sessionsValue) { //$NON-NLS-1$
                 @Override
-                public void onClick(final AjaxRequestTarget pTarget) {
-                    TopPage.this.handler.onReloaderClick(pTarget);
+                protected void populateItem(final ListItem<ESession> pItem) {
+                    pItem.setModel(new CompoundPropertyModel<>(pItem.getModelObject()));
+                    pItem.add(new Label("id")); //$NON-NLS-1$
+                    pItem.add(new Label("name")); //$NON-NLS-1$
+                    pItem.add(new Label("englishName")); //$NON-NLS-1$
                 }
             };
         }
-        return this.reloader;
+        return this.sessions;
     }
 
     private class Handler implements Serializable {
         private static final long serialVersionUID = 8826180320287426527L;
-
-        private void onReloaderClick(final AjaxRequestTarget pTarget) {
-            pTarget.add(getNow());
-        }
 
     }
 }
