@@ -14,6 +14,7 @@ import jp.co.city.nangood.web.ui.page.SessionsPage;
 import org.apache.wicket.Page;
 import org.apache.wicket.Session;
 import org.apache.wicket.guice.GuiceComponentInjector;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
@@ -103,6 +104,11 @@ public class WicketApplication extends WebApplication {
             protected boolean isAuthenticated() {
                 final AppSession session = AppSession.get();
                 return session.isAuthenticated();
+            }
+
+            @Override
+            protected boolean isPermittedPage(@SuppressWarnings("unused") final Class<? extends WebPage> pPageType) {
+                return true;
             }
         });
     }

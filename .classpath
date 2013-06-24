@@ -95,11 +95,6 @@
 			<attribute name="javadoc_location" value="jar:file:/Users/jabaraster/.m2/repository/jabaraster/jabara-servlet/1.1/jabara-servlet-1.1-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="var" path="M2_REPO/jabaraster/jabara-wicket/1.1/jabara-wicket-1.1.jar" sourcepath="M2_REPO/jabaraster/jabara-wicket/1.1/jabara-wicket-1.1-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/Users/jabaraster/.m2/repository/jabaraster/jabara-wicket/1.1/jabara-wicket-1.1-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="var" path="M2_REPO/org/javassist/javassist/3.15.0-GA/javassist-3.15.0-GA.jar" sourcepath="M2_REPO/org/javassist/javassist/3.15.0-GA/javassist-3.15.0-GA-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:file:/Users/jabaraster/.m2/repository/org/javassist/javassist/3.15.0-GA/javassist-3.15.0-GA-javadoc.jar!/"/>
@@ -357,6 +352,7 @@
 			<attribute name="javadoc_location" value="jar:file:/Users/jabaraster/.m2/repository/com/thoughtworks/xstream/xstream/1.4.1/xstream-1.4.1-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JDK7u11"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/jdk1.7.0_10"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jabara-wicket"/>
 	<classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
 </classpath>

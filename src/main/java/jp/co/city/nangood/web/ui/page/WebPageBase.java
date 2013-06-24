@@ -3,7 +3,6 @@ package jp.co.city.nangood.web.ui.page;
 import jabara.general.ArgUtil;
 import jp.co.city.nangood.Environment;
 
-import org.apache.wicket.Page;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
@@ -88,41 +87,13 @@ public abstract class WebPageBase extends WebPage {
     protected abstract IModel<String> getTitleLabelModel();
 
     /**
-     * @param pResponse -
-     */
-    public static void addJQueryJavaSriptReference(final IHeaderResponse pResponse) {
-        ArgUtil.checkNull(pResponse, "pResponse"); //$NON-NLS-1$
-        pResponse.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(WebPageBase.class, "jquery-1.8.3.min.js"))); //$NON-NLS-1$
-    }
-
-    /**
-     * @param pResponse 書き込み用レスポンス.
-     * @param pPageType CSSファイルの基準となるページクラス.
-     */
-    public static void addPageCssReference(final IHeaderResponse pResponse, final Class<? extends Page> pPageType) {
-        ArgUtil.checkNull(pResponse, "pResponse"); //$NON-NLS-1$
-        ArgUtil.checkNull(pPageType, "pPageType"); //$NON-NLS-1$
-        pResponse.render(CssHeaderItem.forReference(new CssResourceReference(pPageType, pPageType.getSimpleName() + ".css"))); //$NON-NLS-1$
-    }
-
-    /**
-     * @param pResponse 書き込み用レスポンス.
-     * @param pPageType jsファイルの基準となるページクラス.
-     */
-    public static void addPageJavaScriptReference(final IHeaderResponse pResponse, final Class<? extends Page> pPageType) {
-        ArgUtil.checkNull(pResponse, "pResponse"); //$NON-NLS-1$
-        ArgUtil.checkNull(pPageType, "pPageType"); //$NON-NLS-1$
-        pResponse.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(pPageType, pPageType.getSimpleName() + ".js"))); //$NON-NLS-1$
-    }
-
-    /**
      * @param pResponse 全ての画面に共通して必要なheadタグ内容を出力します.
      */
-    public static void renderCommonHead(final IHeaderResponse pResponse) {
+    private static void renderCommonHead(final IHeaderResponse pResponse) {
         ArgUtil.checkNull(pResponse, "pResponse"); //$NON-NLS-1$
         pResponse.render(CssHeaderItem.forReference(new CssResourceReference(WebPageBase.class, "bootstrap/css/bootstrap.min.css"))); //$NON-NLS-1$
         pResponse.render(CssHeaderItem.forReference(new CssResourceReference(WebPageBase.class, "App.css"))); //$NON-NLS-1$
-        pResponse.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(WebPageBase.class, JavaScriptUtil.COMMON_JS_FILE_PATH)));
+        pResponse.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(WebPageBase.class, "App.js"))); //$NON-NLS-1$
     }
 
 }

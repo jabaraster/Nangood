@@ -21,7 +21,7 @@ import org.apache.wicket.request.cycle.RequestCycle;
 public class AppSession extends WebSession {
     private static final long                      serialVersionUID = -5522467353190211133L;
 
-    private final AtomicReference<AuthenticatedAs> authenticated    = new AtomicReference<AuthenticatedAs>();
+    private final AtomicReference<AuthenticatedAs> authenticated    = new AtomicReference<>();
 
     private final IAuthenticationService           authenticationService;
 

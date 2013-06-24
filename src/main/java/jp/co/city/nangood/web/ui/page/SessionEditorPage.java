@@ -5,7 +5,9 @@ package jp.co.city.nangood.web.ui.page;
 
 import jabara.general.ArgUtil;
 import jabara.general.NotFound;
+import jabara.wicket.CssUtil;
 import jabara.wicket.ErrorClassAppender;
+import jabara.wicket.JavaScriptUtil;
 import jabara.wicket.ValidatorUtil;
 
 import java.io.Serializable;
@@ -19,8 +21,6 @@ import jp.co.city.nangood.model.Duplicate;
 import jp.co.city.nangood.service.ISessionService;
 
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
-import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -93,11 +93,12 @@ public class SessionEditorPage extends WebPageBase {
     @Override
     public void renderHead(final IHeaderResponse pResponse) {
         super.renderHead(pResponse);
-        addPageCssReference(pResponse, SessionEditorPage.class);
 
-        pResponse.render(JavaScriptHeaderItem.forReference(JavaScriptUtil.JQUERY_REFERENCE));
-        addPageJavaScriptReference(pResponse, SessionEditorPage.class);
-        pResponse.render(OnDomReadyHeaderItem.forScript(JavaScriptUtil.getFocusScript(getName())));
+        CssUtil.addComponentCssReference(pResponse, SessionEditorPage.class);
+
+        JavaScriptUtil.addComponentJavaScriptReference(pResponse, SessionEditorPage.class);
+        JavaScriptUtil.addJQuery1_9_1Reference(pResponse);
+        JavaScriptUtil.addFocusScript(pResponse, getName());
     }
 
     /**

@@ -1,6 +1,7 @@
 package jp.co.city.nangood.web.ui.page;
 
 import jabara.jpa.entity.EntityBase_;
+import jabara.wicket.CssUtil;
 
 import java.util.List;
 
@@ -50,7 +51,8 @@ public class SessionsPage extends WebPageBase {
     @Override
     public void renderHead(final IHeaderResponse pResponse) {
         super.renderHead(pResponse);
-        addPageCssReference(pResponse, SessionsPage.class);
+
+        CssUtil.addComponentCssReference(pResponse, SessionsPage.class);
     }
 
     /**

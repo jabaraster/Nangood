@@ -1,5 +1,7 @@
 package jp.co.city.nangood.web.ui.page;
 
+import jabara.wicket.CssUtil;
+
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
@@ -28,7 +30,9 @@ public class LogoutPage extends WebPageBase {
     @Override
     public void renderHead(final IHeaderResponse pResponse) {
         super.renderHead(pResponse);
-        addPageCssReference(pResponse, this.getClass());
+
+        CssUtil.addComponentCssReference(pResponse, LogoutPage.class);
+
         pResponse.render(OnDomReadyHeaderItem.forScript("countDown(" + REFRESH_INTERVAL_MINUTES + ")")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
