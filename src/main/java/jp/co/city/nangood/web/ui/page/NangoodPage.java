@@ -3,16 +3,17 @@
  */
 package jp.co.city.nangood.web.ui.page;
 
+import jabara.general.ArgUtil;
 import jabara.general.Empty;
 import jabara.general.NotFound;
 
-import java.io.Serializable;
-
 import javax.inject.Inject;
 
+import jp.co.city.nangood.entity.ESession;
 import jp.co.city.nangood.service.ISessionService;
 
 import org.apache.wicket.RestartResponseException;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -26,15 +27,18 @@ public class NangoodPage extends WebPageBase {
     @Inject
     private ISessionService   sessionService;
 
+    private ESession          sessionValue;
+
     /**
-     * @param pParameters
+     * @param pParameters -
      */
     public NangoodPage(final PageParameters pParameters) {
         final String sessionNameInEnglish = n(pParameters).get(0).toString(Empty.STRING);
         try {
-            jabara.Debug.write(this.sessionService.findByEnglishName(sessionNameInEnglish));
+            this.sessionValue = this.sessionService.findByEnglishName(sessionNameInEnglish);
+            initialize();
         } catch (final NotFound e) {
-            throw new RestartResponseException(TopPage.class);
+            throw new RestartResponseException(SessionsPage.class);
         }
     }
 
@@ -52,11 +56,23 @@ public class NangoodPage extends WebPageBase {
         };
     }
 
+    private void initialize() {
+        this.add(new Label("name", this.sessionValue.getName())); //$NON-NLS-1$
+    }
+
+    /**
+     * @param pSession -
+     * @return {@link PageParameters}を引数に取るコンストラクタに渡せるオブジェクト.
+     */
+    public static PageParameters getSessionParameter(final ESession pSession) {
+        ArgUtil.checkNull(pSession, "pSession"); //$NON-NLS-1$
+        final PageParameters ret = new PageParameters();
+        ret.set(0, pSession.getEnglishName());
+        return ret;
+    }
+
     private static PageParameters n(final PageParameters pParameters) {
         return pParameters == null ? new PageParameters() : pParameters;
     }
 
-    private class Handler implements Serializable {
-
-    }
 }

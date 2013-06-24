@@ -16,21 +16,22 @@ import javax.validation.constraints.Size;
  */
 @Entity
 public class ESession extends EntityBase<ESession> {
-    private static final long serialVersionUID               = 4019671149522574100L;
+    private static final long serialVersionUID            = 4019671149522574100L;
 
     /**
      * 
      */
-    public static final int   MAX_CHAR_COUNT_NAME            = 50;
+    public static final int   MAX_CHAR_COUNT_NAME         = 50;
+
     /**
      * 
      */
     public static final int   MAX_CHAR_COUNT_ENGLISH_NAME = 20;
+
     /**
      * 
      */
-    public static final int   MAX_CHAR_COUNT_DESCRIPTION     = 2000;
-
+    public static final int   MAX_CHAR_COUNT_DESCRIPTION  = 2000;
     /**
      * 
      */
@@ -38,7 +39,6 @@ public class ESession extends EntityBase<ESession> {
     @NotNull
     @Size(min = 1, max = MAX_CHAR_COUNT_NAME)
     protected String          name;
-
     /**
      * 
      */
@@ -70,6 +70,13 @@ public class ESession extends EntityBase<ESession> {
     }
 
     /**
+     * @return the name
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
      * @param pDescription descriptionを設定.
      */
     public void setDescription(final String pDescription) {
@@ -81,5 +88,12 @@ public class ESession extends EntityBase<ESession> {
      */
     public void setEnglishName(final String pNameInEnglish) {
         this.englishName = pNameInEnglish;
+    }
+
+    /**
+     * @param pName the name to set
+     */
+    public void setName(final String pName) {
+        this.name = pName;
     }
 }

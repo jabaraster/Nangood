@@ -4,18 +4,24 @@ import jabara.general.ArgUtil;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.Component;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
 /**
  *
  */
 public final class JavaScriptUtil {
 
-    private static final Logger _logger             = Logger.getLogger(JavaScriptUtil.class);
+    private static final Logger                     _logger             = Logger.getLogger(JavaScriptUtil.class);
 
     /**
      * 
      */
-    public static final String  COMMON_JS_FILE_PATH = "App.js";                              //$NON-NLS-1$
+    public static final String                      COMMON_JS_FILE_PATH = "App.js";                                                                //$NON-NLS-1$
+
+    /**
+     * 
+     */
+    public static final JavaScriptResourceReference JQUERY_REFERENCE    = new JavaScriptResourceReference(JavaScriptUtil.class, "jquery-1.9.1.js"); //$NON-NLS-1$
 
     private JavaScriptUtil() {
         // 処理なし

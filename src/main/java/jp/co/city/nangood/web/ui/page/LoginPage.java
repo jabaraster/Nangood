@@ -5,7 +5,9 @@ import jabara.wicket.ErrorClassAppender;
 
 import java.io.Serializable;
 
+import jp.co.city.nangood.entity.ELoginPassword_;
 import jp.co.city.nangood.entity.EUser;
+import jp.co.city.nangood.entity.EUser_;
 import jp.co.city.nangood.model.FailAuthentication;
 import jp.co.city.nangood.web.ui.AppSession;
 
@@ -104,14 +106,14 @@ public class LoginPage extends WebPageBase {
 
     private PasswordTextField getPassword() {
         if (this.password == null) {
-            this.password = new PasswordTextField("password", Model.of(Empty.STRING)); //$NON-NLS-1$
+            this.password = new PasswordTextField(ELoginPassword_.password.getName(), Model.of(Empty.STRING));
         }
         return this.password;
     }
 
     private FeedbackPanel getPasswordFeedback() {
         if (this.passwordFeedback == null) {
-            this.passwordFeedback = new ComponentFeedbackPanel("passwordFeedback", getPassword()); //$NON-NLS-1$
+            this.passwordFeedback = new ComponentFeedbackPanel(ELoginPassword_.password.getName() + "Feedback", getPassword()); //$NON-NLS-1$
         }
         return this.passwordFeedback;
     }
@@ -136,7 +138,7 @@ public class LoginPage extends WebPageBase {
 
     private TextField<String> getUserId() {
         if (this.userId == null) {
-            this.userId = new TextField<>("userId", Model.of(Empty.STRING)); //$NON-NLS-1$
+            this.userId = new TextField<>(EUser_.userId.getName(), Model.of(Empty.STRING));
             this.userId.setRequired(true);
         }
         return this.userId;
@@ -144,7 +146,7 @@ public class LoginPage extends WebPageBase {
 
     private FeedbackPanel getUserIdFeedback() {
         if (this.userIdFeedback == null) {
-            this.userIdFeedback = new ComponentFeedbackPanel("userIdFeedback", getUserId()); //$NON-NLS-1$
+            this.userIdFeedback = new ComponentFeedbackPanel(EUser_.userId.getName() + "Feedback", getUserId()); //$NON-NLS-1$
         }
         return this.userIdFeedback;
     }

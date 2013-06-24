@@ -8,7 +8,8 @@ import jp.co.city.nangood.web.ui.page.LoginPage;
 import jp.co.city.nangood.web.ui.page.LogoutPage;
 import jp.co.city.nangood.web.ui.page.NangoodPage;
 import jp.co.city.nangood.web.ui.page.RestrictedPageBase;
-import jp.co.city.nangood.web.ui.page.TopPage;
+import jp.co.city.nangood.web.ui.page.SessionEditorPage;
+import jp.co.city.nangood.web.ui.page.SessionsPage;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.Session;
@@ -42,7 +43,7 @@ public class WicketApplication extends WebApplication {
      */
     @Override
     public Class<? extends Page> getHomePage() {
-        return TopPage.class;
+        return SessionsPage.class;
     }
 
     /**
@@ -85,7 +86,7 @@ public class WicketApplication extends WebApplication {
 
             @Override
             protected Class<? extends Page> getFirstPageType() {
-                return TopPage.class;
+                return SessionsPage.class;
             }
 
             @Override
@@ -110,5 +111,6 @@ public class WicketApplication extends WebApplication {
         this.mountPage("login", LoginPage.class); //$NON-NLS-1$
         this.mountPage("logout", LogoutPage.class); //$NON-NLS-1$
         this.mountPage("nangood", NangoodPage.class); //$NON-NLS-1$
+        this.mountPage("session/edit", SessionEditorPage.class); //$NON-NLS-1$
     }
 }

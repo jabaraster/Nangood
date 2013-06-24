@@ -1,11 +1,15 @@
 <wicket:extend>
   <a wicket:id="goNewSession" href="#" class="btn btn-primary btn-large"><i class="icon-white icon-plus-sign"></i> 追加</a>
+  <hr />
   <table>
     <thead>
       <tr>
         <th>ID</th>
         <th>名前</th>
         <th>英名</th>
+        <th>備考</th>
+        <th> </th>
+        <th> </th>
       </tr>
     </thead>
     <tbody>
@@ -13,10 +17,20 @@
         <td wicket:id="id"></td>
         <td wicket:id="name"></td>
         <td wicket:id="englishName"></td>
+        <td wicket:id="description"></td>
+        <td><a wicket:id="goNangood">"なんぐっど"を開く！</a></td>
+        <td><a wicket:id="goEditor">編集</a></td>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+      </tr>
+    </tfoot>
   </table>
-
-  <hr/>
-  <a wicket:id="goLogout">ログアウト</a>
 </wicket:extend>

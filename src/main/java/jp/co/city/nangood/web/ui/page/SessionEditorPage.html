@@ -1,0 +1,34 @@
+<wicket:extend>
+
+  <h1>セッションを登録</h1>
+
+  <form wicket:id="form">
+    <div wicket:id="feedback"></div>
+    <fieldset>
+      <ul>
+        <li>
+          <span class="label"><wicket:message key="form.name" /></span>
+          <input wicket:id="name" type="text" />
+          <div wicket:id="nameFeedback"></div>
+        </li>
+        <li>
+          <span class="label"><wicket:message key="form.englishName" /></span>
+          <input wicket:id="englishName" type="text" />
+          <div wicket:id="englishNameFeedback"></div>
+        </li>
+        <li>
+          <span class="label"><wicket:message key="form.description" /></span>
+          <div wicket:id="descriptionFeedback"></div>
+          <textarea wicket:id="description"></textarea>
+        </li>
+        <li>
+          <button wicket:id="submitter" class="btn btn-warning btn-large"><i class="icon-white icon-ok"></i> 登録</button>
+        </li>
+        <li>
+          <button wicket:id="deleter" class="btn btn-danger btn-large"><i class="icon-white icon-remove-sign"></i> 削除</button>
+        </li>
+      </ul>
+    </fieldset>
+  </form>
+
+</wicket:extend>
