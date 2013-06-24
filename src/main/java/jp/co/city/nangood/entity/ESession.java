@@ -3,7 +3,9 @@
  */
 package jp.co.city.nangood.entity;
 
-import jabara.jpa.entity.EntityBase;
+import jabara.bean.annotation.Localized;
+import jabara.bean.annotation.MultiLine;
+import jabara.bean.annotation.Order;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +17,7 @@ import javax.validation.constraints.Size;
  * @author jabaraster
  */
 @Entity
-public class ESession extends EntityBase<ESession> {
+public class ESession extends AppEntity<ESession> {
     private static final long serialVersionUID            = 4019671149522574100L;
 
     /**
@@ -35,7 +37,7 @@ public class ESession extends EntityBase<ESession> {
     /**
      * 
      */
-    @Column(nullable = true, unique = true, length = MAX_CHAR_COUNT_NAME * 3)
+    @Column(nullable = true, length = MAX_CHAR_COUNT_NAME * 3)
     @NotNull
     @Size(min = 1, max = MAX_CHAR_COUNT_NAME)
     protected String          name;
@@ -58,6 +60,9 @@ public class ESession extends EntityBase<ESession> {
     /**
      * @return descriptionを返す.
      */
+    @Localized
+    @MultiLine
+    @Order(300)
     public String getDescription() {
         return this.description;
     }
@@ -65,6 +70,8 @@ public class ESession extends EntityBase<ESession> {
     /**
      * @return nameInEnglishを返す.
      */
+    @Localized
+    @Order(200)
     public String getEnglishName() {
         return this.englishName;
     }
@@ -72,6 +79,8 @@ public class ESession extends EntityBase<ESession> {
     /**
      * @return the name
      */
+    @Localized
+    @Order(100)
     public String getName() {
         return this.name;
     }

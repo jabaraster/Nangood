@@ -6,6 +6,8 @@ package jp.co.city.nangood.web.ui.page;
 import jabara.general.ArgUtil;
 import jabara.general.Empty;
 import jabara.general.NotFound;
+import jabara.wicket.CssUtil;
+import jabara.wicket.JavaScriptUtil;
 
 import javax.inject.Inject;
 
@@ -13,6 +15,7 @@ import jp.co.city.nangood.entity.ESession;
 import jp.co.city.nangood.service.ISessionService;
 
 import org.apache.wicket.RestartResponseException;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
@@ -40,6 +43,16 @@ public class NangoodPage extends WebPageBase {
         } catch (final NotFound e) {
             throw new RestartResponseException(SessionsPage.class);
         }
+    }
+
+    /**
+     * @see jp.co.city.nangood.web.ui.page.WebPageBase#renderHead(org.apache.wicket.markup.head.IHeaderResponse)
+     */
+    @Override
+    public void renderHead(final IHeaderResponse pResponse) {
+        super.renderHead(pResponse);
+        CssUtil.addComponentCssReference(pResponse, NangoodPage.class);
+        JavaScriptUtil.addComponentJavaScriptReference(pResponse, NangoodPage.class);
     }
 
     /**

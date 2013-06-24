@@ -1,5 +1,6 @@
 package jp.co.city.nangood.web.ui.page;
 
+import jabara.general.Empty;
 import jabara.jpa.entity.EntityBase_;
 import jabara.wicket.CssUtil;
 
@@ -25,8 +26,11 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 /**
  *
  */
+@SuppressWarnings("synthetic-access")
 public class SessionsPage extends WebPageBase {
-    private static final long       serialVersionUID = -4965903336608758671L;
+    private static final long       serialVersionUID       = -4965903336608758671L;
+
+    private static final int        DESCRIPTION_CHAR_COUNT = 100;
 
     @Inject
     private ISessionService         sessionService;
@@ -83,7 +87,7 @@ public class SessionsPage extends WebPageBase {
                     pItem.add(new Label(EntityBase_.id.getName()));
                     pItem.add(new Label(ESession_.name.getName()));
                     pItem.add(new Label(ESession_.englishName.getName()));
-                    pItem.add(new MultiLineLabel(ESession_.description.getName()));
+                    pItem.add(new MultiLineLabel(ESession_.description.getName(), cut(session.getDescription(), DESCRIPTION_CHAR_COUNT)));
 
                     pItem.add(createGoNangoodLink(session));
                     pItem.add(createGoEditorLink(session));
@@ -92,7 +96,7 @@ public class SessionsPage extends WebPageBase {
 
                 private BookmarkablePageLink<Object> createGoEditorLink(final ESession pSession) {
                     final PageParameters params = SessionEditorPage.getIdParameter(pSession);
-                    final BookmarkablePageLink<Object> link = new BookmarkablePageLink<>("goEditor", SessionEditorPage.class, params); //$NON-NLS-1$
+                    final BookmarkablePageLink<Object> link = new BookmarkablePageLink<>("goEditor", SessionEditorPage2.class, params); //$NON-NLS-1$
                     return link;
                 }
 
@@ -104,5 +108,15 @@ public class SessionsPage extends WebPageBase {
             };
         }
         return this.sessions;
+    }
+
+    private static String cut(final String s, final int pMaxCharCount) {
+        if (s == null) {
+            return Empty.STRING;
+        }
+        if (s.length() < pMaxCharCount) {
+            return s;
+        }
+        return s.substring(0, pMaxCharCount) + "..."; //$NON-NLS-1$
     }
 }
