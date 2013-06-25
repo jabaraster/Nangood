@@ -57,7 +57,7 @@ public abstract class WebPageBase extends WebPage {
      */
     protected Label getApplicationNameInHeader() {
         if (this.applicationNameInHeader == null) {
-            this.applicationNameInHeader = new Label("applicationNameInHeader", Model.of(Environment.getApplicationName())); //$NON-NLS-1$
+            this.applicationNameInHeader = new Label("applicationNameInHeader", Model.of(Environment.getJapaneseApplicationName())); //$NON-NLS-1$
         }
         return this.applicationNameInHeader;
     }
@@ -74,7 +74,7 @@ public abstract class WebPageBase extends WebPage {
             this.titleLabel = new Label("titleLabel", new AbstractReadOnlyModel<String>() {
                 @Override
                 public String getObject() {
-                    return getTitleLabelModel().getObject() + " - " + Environment.getApplicationName();
+                    return getTitleLabelModel().getObject() + " - " + Environment.getJapaneseApplicationName();
                 }
             });
         }

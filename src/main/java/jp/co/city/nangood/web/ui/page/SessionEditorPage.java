@@ -1,14 +1,11 @@
-/**
- * 
- */
 package jp.co.city.nangood.web.ui.page;
 
-import jabara.general.ArgUtil;
+import jabara.general.ExceptionUtil;
 import jabara.general.NotFound;
 import jabara.wicket.CssUtil;
 import jabara.wicket.ErrorClassAppender;
 import jabara.wicket.JavaScriptUtil;
-import jabara.wicket.ValidatorUtil;
+import jabara.wicket.beaneditor.BeanEditor;
 
 import java.io.Serializable;
 
@@ -23,24 +20,20 @@ import jp.co.city.nangood.service.ISessionService;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextArea;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.ComponentFeedbackPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValueConversionException;
-import org.apache.wicket.validation.validator.StringValidator;
 
 /**
  * @author jabaraster
  */
-@SuppressWarnings({ "synthetic-access", "serial" })
+@SuppressWarnings({ "serial", "synthetic-access" })
 public class SessionEditorPage extends WebPageBase {
-    private static final long        serialVersionUID   = 654683026519994877L;
+    private static final long        serialVersionUID   = 3755023173751841675L;
 
     private static final String      PARAM_SESSION_ID   = "id";                                     //$NON-NLS-1$
 
@@ -48,21 +41,15 @@ public class SessionEditorPage extends WebPageBase {
     private ISessionService          sessionService;
 
     private final Handler            handler            = new Handler();
+    private final ESession           sessionValue;
 
     private final ErrorClassAppender errorClassAppender = new ErrorClassAppender(Model.of("error")); //$NON-NLS-1$
 
-    private final ESession           sessionValue;
-
     private Form<ESession>           form;
     private FeedbackPanel            feedback;
-    private TextField<String>        name;
-    private FeedbackPanel            nameFeedback;
-    private TextField<String>        englishName;
-    private FeedbackPanel            englishNameFeedback;
-    private TextArea<String>         description;
-    private FeedbackPanel            descriptionFeedback;
-    private Button                   deleter;
+    private BeanEditor<ESession>     editor;
     private Button                   submitter;
+    private Button                   deleter;
 
     /**
      * 
@@ -93,12 +80,9 @@ public class SessionEditorPage extends WebPageBase {
     @Override
     public void renderHead(final IHeaderResponse pResponse) {
         super.renderHead(pResponse);
-
-        CssUtil.addComponentCssReference(pResponse, SessionEditorPage.class);
-
-        JavaScriptUtil.addComponentJavaScriptReference(pResponse, SessionEditorPage.class);
         JavaScriptUtil.addJQuery1_9_1Reference(pResponse);
-        JavaScriptUtil.addFocusScript(pResponse, getName());
+        JavaScriptUtil.addComponentJavaScriptReference(pResponse, SessionEditorPage.class);
+        CssUtil.addComponentCssReference(pResponse, SessionEditorPage.class);
     }
 
     /**
@@ -106,7 +90,7 @@ public class SessionEditorPage extends WebPageBase {
      */
     @Override
     protected IModel<String> getTitleLabelModel() {
-        return Model.of("セッションを編集"); //$NON-NLS-1$
+        return Model.of(this.getClass().getSimpleName());
     }
 
     private Button getDeleter() {
@@ -126,39 +110,11 @@ public class SessionEditorPage extends WebPageBase {
         return this.deleter;
     }
 
-    private TextArea<String> getDescription() {
-        if (this.description == null) {
-            this.description = new TextArea<>(ESession_.description.getName());
-            this.description.add(new StringValidator(Integer.valueOf(0), Integer.valueOf(ESession.MAX_CHAR_COUNT_DESCRIPTION)));
+    private BeanEditor<ESession> getEditor() {
+        if (this.editor == null) {
+            this.editor = new BeanEditor<>("editor", this.sessionValue); //$NON-NLS-1$
         }
-        return this.description;
-    }
-
-    private FeedbackPanel getDescriptionFeedback() {
-        if (this.descriptionFeedback == null) {
-            this.descriptionFeedback = new ComponentFeedbackPanel(getDescription().getId() + "Feedback", getDescription()); //$NON-NLS-1$
-        }
-        return this.descriptionFeedback;
-    }
-
-    private TextField<String> getEnglishName() {
-        if (this.englishName == null) {
-            this.englishName = new TextField<String>(ESession_.englishName.getName()) {
-                @Override
-                public boolean isEnabled() {
-                    return !SessionEditorPage.this.sessionValue.isPersisted();
-                }
-            };
-            ValidatorUtil.setSimpleStringValidator(this.englishName, ESession.class, ESession_.englishName);
-        }
-        return this.englishName;
-    }
-
-    private FeedbackPanel getEnglishNameFeedback() {
-        if (this.englishNameFeedback == null) {
-            this.englishNameFeedback = new ComponentFeedbackPanel(getEnglishName().getId() + "Feedback", getEnglishName()); //$NON-NLS-1$
-        }
-        return this.englishNameFeedback;
+        return this.editor;
     }
 
     private FeedbackPanel getFeedback() {
@@ -170,33 +126,13 @@ public class SessionEditorPage extends WebPageBase {
 
     private Form<ESession> getForm() {
         if (this.form == null) {
-            this.form = new Form<>("form", new CompoundPropertyModel<>(this.sessionValue)); //$NON-NLS-1$
+            this.form = new Form<>("form"); //$NON-NLS-1$
             this.form.add(getFeedback());
-            this.form.add(getName());
-            this.form.add(getNameFeedback());
-            this.form.add(getEnglishName());
-            this.form.add(getEnglishNameFeedback());
-            this.form.add(getDescription());
-            this.form.add(getDescriptionFeedback());
+            this.form.add(getEditor());
             this.form.add(getSubmitter());
             this.form.add(getDeleter());
         }
         return this.form;
-    }
-
-    private TextField<String> getName() {
-        if (this.name == null) {
-            this.name = new TextField<>(ESession_.name.getName());
-            ValidatorUtil.setSimpleStringValidator(this.name, ESession.class, ESession_.name);
-        }
-        return this.name;
-    }
-
-    private FeedbackPanel getNameFeedback() {
-        if (this.nameFeedback == null) {
-            this.nameFeedback = new ComponentFeedbackPanel(getName().getId() + "Feedback", getName()); //$NON-NLS-1$
-        }
-        return this.nameFeedback;
     }
 
     private Button getSubmitter() {
@@ -222,10 +158,9 @@ public class SessionEditorPage extends WebPageBase {
 
     /**
      * @param pSession -
-     * @return {@link PageParameters}を引数に取るコンストラクタに、安全に渡せるオブジェクト.
+     * @return {@link PageParameters}を引数に取るコンストラクタのためのオブジェクト.
      */
     public static PageParameters getIdParameter(final ESession pSession) {
-        ArgUtil.checkNull(pSession, "pSession"); //$NON-NLS-1$
         final PageParameters ret = new PageParameters();
         ret.add(PARAM_SESSION_ID, pSession.getId());
         return ret;
@@ -250,11 +185,16 @@ public class SessionEditorPage extends WebPageBase {
             try {
                 SessionEditorPage.this.sessionService.save(SessionEditorPage.this.sessionValue);
                 setResponsePage(SessionsPage.class);
+
             } catch (final Duplicate e) {
-                getEnglishName().error(getString("englishNameDuplicate")); //$NON-NLS-1$
-                SessionEditorPage.this.errorClassAppender.addErrorClass(getForm());
+                try {
+                    getEditor().findInputComponent(ESession_.englishName.getName()).error(getString("englishNameDuplicate")); //$NON-NLS-1$
+                    SessionEditorPage.this.errorClassAppender.addErrorClass(getForm());
+
+                } catch (final NotFound nf) {
+                    throw ExceptionUtil.rethrow(nf);
+                }
             }
         }
     }
-
 }

@@ -9,7 +9,6 @@ import jp.co.city.nangood.web.ui.page.LogoutPage;
 import jp.co.city.nangood.web.ui.page.NangoodPage;
 import jp.co.city.nangood.web.ui.page.RestrictedPageBase;
 import jp.co.city.nangood.web.ui.page.SessionEditorPage;
-import jp.co.city.nangood.web.ui.page.SessionEditorPage2;
 import jp.co.city.nangood.web.ui.page.SessionsPage;
 
 import org.apache.wicket.Page;
@@ -119,6 +118,5 @@ public class WicketApplication extends WebApplication {
         this.mountPage("logout", LogoutPage.class); //$NON-NLS-1$
         this.mountPage("nangood", NangoodPage.class); //$NON-NLS-1$
         this.mountPage("session/edit", SessionEditorPage.class); //$NON-NLS-1$
-        this.mountPage("session/edit2", SessionEditorPage2.class); //$NON-NLS-1$
     }
 }

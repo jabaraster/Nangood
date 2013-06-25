@@ -6,6 +6,7 @@ package jp.co.city.nangood.service.impl;
 import jabara.general.ArgUtil;
 import jabara.general.NotFound;
 import jabara.jpa.JpaDaoBase;
+import jabara.jpa.entity.EntityBase_;
 
 import java.util.List;
 
@@ -90,6 +91,7 @@ public class SessionServiceImpl extends JpaDaoBase implements ISessionService {
     @Override
     public void save(final ESession pSession) throws Duplicate {
         ArgUtil.checkNull(pSession, "pSession"); //$NON-NLS-1$
+
         if (pSession.isPersisted()) {
             updateCore(pSession);
         } else {
@@ -97,7 +99,27 @@ public class SessionServiceImpl extends JpaDaoBase implements ISessionService {
         }
     }
 
-    private boolean englishNameIsDuplicate(final String pEnglishName) {
+    private boolean englishNameIsDuplicatedForUpdate(final ESession pSession) {
+        final EntityManager em = getEntityManager();
+        final CriteriaBuilder builder = em.getCriteriaBuilder();
+        final CriteriaQuery<Long> query = builder.createQuery(Long.class);
+        final Root<ESession> root = query.from(ESession.class);
+
+        query.select(root.get(EntityBase_.id));
+        query.where( //
+                builder.equal(root.get(ESession_.englishName), pSession.getEnglishName()) //
+                , builder.not(builder.equal(root.get(EntityBase_.id), pSession.getId())) //
+        );
+
+        try {
+            getSingleResult(em.createQuery(query));
+            return true;
+        } catch (final NotFound e) {
+            return false;
+        }
+    }
+
+    private boolean englishNameIsDuplicateForInsert(final String pEnglishName) {
         try {
             findByEnglishName(pEnglishName);
             return true;
@@ -118,13 +140,17 @@ public class SessionServiceImpl extends JpaDaoBase implements ISessionService {
     }
 
     private void insertCore(final ESession pSession) throws Duplicate {
-        if (englishNameIsDuplicate(pSession.getEnglishName())) {
+        if (englishNameIsDuplicateForInsert(pSession.getEnglishName())) {
             throw Duplicate.INSTANCE;
         }
         getEntityManager().persist(pSession);
     }
 
-    private void updateCore(final ESession pSession) {
+    private void updateCore(final ESession pSession) throws Duplicate {
+        if (englishNameIsDuplicatedForUpdate(pSession)) {
+            throw Duplicate.INSTANCE;
+        }
+
         final EntityManager em = getEntityManager();
         if (em.contains(pSession)) {
             return;
