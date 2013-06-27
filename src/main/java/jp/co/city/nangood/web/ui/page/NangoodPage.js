@@ -1,5 +1,23 @@
-<wicket:extend>
+(function() {
+	var counter = 0;
+	var ary = [];
+    function initialize() {
+    	$('#nangood').click(function() {
+    		++counter;
+    		ary.push({});
+    		refreshCounter();
+    	});
 
-  <h1 wicket:id="name"></h1>
+    	setInterval(function() {
+    		ary.splice(0);
+    		refreshCounter();
+    	}, 1000);
+    }
+    
+    function refreshCounter() {
+    	$('#counter').html(counter);
+    	$('#remainder').html(ary.length);
+    }
 
-</wicket:extend>
+    $(initialize);
+})();

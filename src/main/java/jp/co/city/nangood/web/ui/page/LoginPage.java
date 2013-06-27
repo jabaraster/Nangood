@@ -63,7 +63,6 @@ public class LoginPage extends WebPageBase {
 
         CssUtil.addComponentCssReference(pResponse, LoginPage.class);
 
-        JavaScriptUtil.addComponentJavaScriptReference(pResponse, LoginPage.class);
         JavaScriptUtil.addFocusScript(pResponse, getUserId());
     }
 

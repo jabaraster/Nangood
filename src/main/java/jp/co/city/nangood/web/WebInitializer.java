@@ -25,6 +25,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.util.IProvider;
 import org.eclipse.jetty.servlets.GzipFilter;
+import org.hibernate.dialect.PostgreSQL82Dialect;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -95,7 +96,16 @@ public class WebInitializer extends GuiceServletContextListener {
             protected void configureServlets() {
                 install(new SinglePersistenceUnitJpaModule( //
                         Environment.getApplicationName() //
-                        , new SystemPropertyToPostgreJpaPropertiesParser() //
+                        , new SystemPropertyToPostgreJpaPropertiesParser() {
+                            @Override
+                            public Map<String, String> produce() {
+                                final Map<String, String> ret = super.produce();
+                                if (!ret.isEmpty()) {
+                                    ret.put("hibernate.dialect", PostgreSQL82Dialect.class.getName()); //$NON-NLS-1$
+                                }
+                                return ret;
+                            }
+                        } //
                 ));
                 initializeJersey();
                 initializeWicket();

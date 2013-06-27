@@ -72,6 +72,7 @@ public class WebStarter {
             dataSource.setPortNumber(dbUri.getPort());
             dataSource.setUser(credential.getUserName());
             dataSource.setPassword(credential.getPassword());
+            dataSource.setDatabaseName(dbUri.getPath().substring(1));
 
             return dataSource;
 

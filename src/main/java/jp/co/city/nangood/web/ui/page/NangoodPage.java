@@ -52,6 +52,7 @@ public class NangoodPage extends WebPageBase {
     public void renderHead(final IHeaderResponse pResponse) {
         super.renderHead(pResponse);
         CssUtil.addComponentCssReference(pResponse, NangoodPage.class);
+        JavaScriptUtil.addJQuery1_9_1Reference(pResponse);
         JavaScriptUtil.addComponentJavaScriptReference(pResponse, NangoodPage.class);
     }
 
