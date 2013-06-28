@@ -100,13 +100,10 @@ public class WebInitializer extends GuiceServletContextListener {
                             @Override
                             public Map<String, String> produce() {
                                 final Map<String, String> ret = super.produce();
-                                if (!ret.isEmpty()) {
-                                    ret.put("hibernate.dialect", PostgreSQL82Dialect.class.getName()); //$NON-NLS-1$
-                                }
+                                ret.put("hibernate.dialect", PostgreSQL82Dialect.class.getName()); //$NON-NLS-1$
                                 return ret;
                             }
-                        } //
-                ));
+                        }));
                 initializeJersey();
                 initializeWicket();
             }

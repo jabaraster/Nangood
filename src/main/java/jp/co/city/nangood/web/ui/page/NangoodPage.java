@@ -16,6 +16,7 @@ import jp.co.city.nangood.service.ISessionService;
 
 import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.StringHeaderItem;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
@@ -54,6 +55,9 @@ public class NangoodPage extends WebPageBase {
         CssUtil.addComponentCssReference(pResponse, NangoodPage.class);
         JavaScriptUtil.addJQuery1_9_1Reference(pResponse);
         JavaScriptUtil.addComponentJavaScriptReference(pResponse, NangoodPage.class);
+
+        pResponse.render(StringHeaderItem
+                .forString("<meta name=\"viewport\" content=\"width=device-width, user-scalable=0, initial-scale=1.0, maximum-scale=1.0\" />")); //$NON-NLS-1$
     }
 
     /**
