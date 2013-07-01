@@ -12,6 +12,11 @@
     		ary.splice(0);
     		refreshCounter();
     	}, 1000);
+
+    	var tank = $('#tank');
+    	$('#swipeArea').on('swipeleft', function() {
+    		tank.html((++counter) + ' ぐっど！');
+    	});
     }
     
     function refreshCounter() {

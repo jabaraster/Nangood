@@ -2,7 +2,7 @@
 
 iframe {
 	width: 100%;
-	height: 400px;
+	height: 200px;
 	border: solid 1px rgba(180,150,150,1);
 	border-radius: @border-radius-normal;
 }
@@ -11,8 +11,16 @@ iframe {
 	text-align: center;
 }
 
-#nangood {
-    margin-top: 10px;
-    height: 3em;
-    width: 90%;
+@swipe-area-width: 70%;
+@tank-area-width: 100% - @swipe-area-width - 5;
+
+#swipeArea {
+	border: @debug-border;
+	width: @swipe-area-width;
+	display: inline-block;
+}
+
+#tank {
+	border: @debug-border;
+	width: @tank-area-width;
 }

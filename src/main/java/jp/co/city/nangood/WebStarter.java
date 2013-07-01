@@ -64,9 +64,6 @@ public class WebStarter {
             final String userInfo = dbUri.getUserInfo();
             final Credential credential = parseCredential(userInfo);
 
-            final String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath() + ":" + dbUri.getPort(); //$NON-NLS-1$ //$NON-NLS-2$
-            jabara.Debug.write(dbUri);
-
             final PGPoolingDataSource dataSource = new PGPoolingDataSource();
             dataSource.setServerName(dbUri.getHost());
             dataSource.setPortNumber(dbUri.getPort());

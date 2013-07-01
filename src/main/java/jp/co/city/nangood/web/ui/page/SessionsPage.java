@@ -98,7 +98,7 @@ public class SessionsPage extends WebPageBase {
     }
 
     private static LongTextLabel createDescriptionLabel(final ESession pSession) {
-        final PropertyModel<String> model = new PropertyModel<String>(pSession, ESession_.description.getName());
+        final PropertyModel<String> model = new PropertyModel<>(pSession, ESession_.description.getName());
         return new LongTextLabel(ESession_.description.getName(), model);
     }
 

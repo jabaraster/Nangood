@@ -11,6 +11,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
@@ -86,14 +87,32 @@ public abstract class WebPageBase extends WebPage {
      */
     protected abstract IModel<String> getTitleLabelModel();
 
+    private static void addAppCss(final IHeaderResponse pResponse) {
+        final String cssFileName = "App.css"; //$NON-NLS-1$
+        final CssResourceReference ref = new CssResourceReference(WebPageBase.class, cssFileName);
+        pResponse.render(CssHeaderItem.forReference(ref));
+        WebApplication.get().mountResource(cssFileName, ref);
+    }
+
+    private static void addAppJavaScript(final IHeaderResponse pResponse) {
+        final String jsFileName = "App.js"; //$NON-NLS-1$
+        final JavaScriptResourceReference ref = new JavaScriptResourceReference(WebPageBase.class, jsFileName);
+        pResponse.render(JavaScriptHeaderItem.forReference(ref));
+        WebApplication.get().mountResource(jsFileName, ref);
+    }
+
+    private static void addBootstrapCss(final IHeaderResponse pResponse) {
+        pResponse.render(CssHeaderItem.forReference(new CssResourceReference(WebPageBase.class, "bootstrap/css/bootstrap.min.css"))); //$NON-NLS-1$
+    }
+
     /**
      * @param pResponse 全ての画面に共通して必要なheadタグ内容を出力します.
      */
     private static void renderCommonHead(final IHeaderResponse pResponse) {
         ArgUtil.checkNull(pResponse, "pResponse"); //$NON-NLS-1$
-        pResponse.render(CssHeaderItem.forReference(new CssResourceReference(WebPageBase.class, "bootstrap/css/bootstrap.min.css"))); //$NON-NLS-1$
-        pResponse.render(CssHeaderItem.forReference(new CssResourceReference(WebPageBase.class, "App.css"))); //$NON-NLS-1$
-        pResponse.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(WebPageBase.class, "App.js"))); //$NON-NLS-1$
+        addBootstrapCss(pResponse);
+        addAppCss(pResponse);
+        addAppJavaScript(pResponse);
     }
 
 }

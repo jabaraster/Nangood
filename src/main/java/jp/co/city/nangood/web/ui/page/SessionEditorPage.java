@@ -6,6 +6,7 @@ import jabara.wicket.CssUtil;
 import jabara.wicket.ErrorClassAppender;
 import jabara.wicket.JavaScriptUtil;
 import jabara.wicket.beaneditor.BeanEditor;
+import jabara.wicket.beaneditor.PropertyEditor;
 
 import java.io.Serializable;
 
@@ -20,6 +21,7 @@ import jp.co.city.nangood.service.ISessionService;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.ComponentFeedbackPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
@@ -27,6 +29,8 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValueConversionException;
+import org.apache.wicket.util.visit.IVisit;
+import org.apache.wicket.util.visit.IVisitor;
 
 /**
  * @author jabaraster
@@ -83,6 +87,7 @@ public class SessionEditorPage extends WebPageBase {
         JavaScriptUtil.addJQuery1_9_1Reference(pResponse);
         JavaScriptUtil.addComponentJavaScriptReference(pResponse, SessionEditorPage.class);
         CssUtil.addComponentCssReference(pResponse, SessionEditorPage.class);
+        addFocusScript(pResponse);
     }
 
     /**
@@ -91,6 +96,21 @@ public class SessionEditorPage extends WebPageBase {
     @Override
     protected IModel<String> getTitleLabelModel() {
         return Model.of(this.getClass().getSimpleName());
+    }
+
+    private void addFocusScript(final IHeaderResponse pResponse) {
+        try {
+            final PropertyEditor ic = getEditor().findInputComponent(ESession_.name.getName());
+            ic.visitChildren(FormComponent.class, new IVisitor<FormComponent<?>, Object>() {
+                @Override
+                public void component(final FormComponent<?> pFormComponent, final IVisit<Object> pVisit) {
+                    JavaScriptUtil.addFocusScript(pResponse, pFormComponent);
+                    pVisit.stop();
+                }
+            });
+        } catch (final NotFound e) {
+            throw ExceptionUtil.rethrow(e); // 例外は通常起きないはず
+        }
     }
 
     private Button getDeleter() {
