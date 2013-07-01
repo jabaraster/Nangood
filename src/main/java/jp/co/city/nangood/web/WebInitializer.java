@@ -105,8 +105,7 @@ public class WebInitializer extends GuiceServletContextListener {
                                 }
                                 return ret;
                             }
-                        } //
-                ));
+                        }));
                 initializeJersey();
                 initializeWicket();
             }

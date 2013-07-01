@@ -57,7 +57,6 @@ public class WebStarter {
 
     private static DataSource createPostgreSQLDataBaseFromHeroku() {
         final String databaseUrl = System.getProperty(SystemPropertyToPostgreJpaPropertiesParser.KEY_DATABASE_URL);
-        jabara.Debug.write(databaseUrl);
         try {
             final URI dbUri = new URI(databaseUrl);
 

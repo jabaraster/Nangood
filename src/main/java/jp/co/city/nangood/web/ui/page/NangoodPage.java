@@ -56,6 +56,7 @@ public class NangoodPage extends WebPageBase {
     @Override
     public void renderHead(final IHeaderResponse pResponse) {
         super.renderHead(pResponse);
+<<<<<<< HEAD
 
         pResponse.render(StringHeaderItem.forString("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />")); //$NON-NLS-1$
 
@@ -64,7 +65,16 @@ public class NangoodPage extends WebPageBase {
         pResponse.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(NangoodPage.class, "jquery.mobile-1.3.1.min.js"))); //$NON-NLS-1$
 
         CssUtil.addComponentCssReference(pResponse, NangoodPage.class);
+=======
+        CssUtil.addComponentCssReference(pResponse, NangoodPage.class);
+        pResponse.render(JavaScriptHeaderItem.forUrl("http://code.jquery.com/jquery-1.9.1.min.js")); //$NON-NLS-1$
+        pResponse.render(JavaScriptHeaderItem.forUrl("http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js")); //$NON-NLS-1$
+        // JavaScriptUtil.addJQuery1_9_1Reference(pResponse);
+>>>>>>> FETCH_HEAD
         JavaScriptUtil.addComponentJavaScriptReference(pResponse, NangoodPage.class);
+
+        pResponse.render(StringHeaderItem
+                .forString("<meta name=\"viewport\" content=\"width=device-width, user-scalable=0, initial-scale=1.0, maximum-scale=1.0\" />")); //$NON-NLS-1$
     }
 
     /**
