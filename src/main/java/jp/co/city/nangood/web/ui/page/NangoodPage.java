@@ -15,7 +15,6 @@ import jp.co.city.nangood.entity.ESession;
 import jp.co.city.nangood.service.ISessionService;
 
 import org.apache.wicket.RestartResponseException;
-import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.StringHeaderItem;
@@ -23,8 +22,6 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.request.resource.CssResourceReference;
-import org.apache.wicket.request.resource.JavaScriptResourceReference;
 
 /**
  * @author jabaraster
@@ -56,25 +53,15 @@ public class NangoodPage extends WebPageBase {
     @Override
     public void renderHead(final IHeaderResponse pResponse) {
         super.renderHead(pResponse);
-<<<<<<< HEAD
-
-        pResponse.render(StringHeaderItem.forString("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />")); //$NON-NLS-1$
-
-        JavaScriptUtil.addJQuery1_9_1Reference(pResponse);
-        pResponse.render(CssHeaderItem.forReference(new CssResourceReference(NangoodPage.class, "jquery.mobile-1.3.1.min.css"))); //$NON-NLS-1$
-        pResponse.render(JavaScriptHeaderItem.forReference(new JavaScriptResourceReference(NangoodPage.class, "jquery.mobile-1.3.1.min.js"))); //$NON-NLS-1$
-
-        CssUtil.addComponentCssReference(pResponse, NangoodPage.class);
-=======
-        CssUtil.addComponentCssReference(pResponse, NangoodPage.class);
-        pResponse.render(JavaScriptHeaderItem.forUrl("http://code.jquery.com/jquery-1.9.1.min.js")); //$NON-NLS-1$
-        pResponse.render(JavaScriptHeaderItem.forUrl("http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js")); //$NON-NLS-1$
-        // JavaScriptUtil.addJQuery1_9_1Reference(pResponse);
->>>>>>> FETCH_HEAD
-        JavaScriptUtil.addComponentJavaScriptReference(pResponse, NangoodPage.class);
 
         pResponse.render(StringHeaderItem
                 .forString("<meta name=\"viewport\" content=\"width=device-width, user-scalable=0, initial-scale=1.0, maximum-scale=1.0\" />")); //$NON-NLS-1$
+
+        CssUtil.addComponentCssReference(pResponse, NangoodPage.class);
+        pResponse.render(JavaScriptHeaderItem.forUrl("http://code.jquery.com/jquery-1.9.1.min.js")); //$NON-NLS-1$
+        pResponse.render(JavaScriptHeaderItem.forUrl("http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js")); //$NON-NLS-1$
+        JavaScriptUtil.addJQuery1_9_1Reference(pResponse);
+        JavaScriptUtil.addComponentJavaScriptReference(pResponse, NangoodPage.class);
     }
 
     /**

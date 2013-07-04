@@ -1,7 +1,6 @@
 package jp.co.city.nangood.web.ui;
 
 import jabara.general.ArgUtil;
-import jabara.wicket.JavaScriptUtil;
 import jabara.wicket.LoginPageInstantiationAuthorizer;
 import jabara.wicket.MarkupIdForceOutputer;
 import jp.co.city.nangood.service.IAuthenticationService;
@@ -11,6 +10,7 @@ import jp.co.city.nangood.web.ui.page.NangoodPage;
 import jp.co.city.nangood.web.ui.page.RestrictedPageBase;
 import jp.co.city.nangood.web.ui.page.SessionEditorPage;
 import jp.co.city.nangood.web.ui.page.SessionsPage;
+import jp.co.city.nangood.web.ui.page.TestEditorPage;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.Session;
@@ -119,6 +119,7 @@ public class WicketApplication extends WebApplication {
         this.mountPage("logout", LogoutPage.class); //$NON-NLS-1$
         this.mountPage("nangood", NangoodPage.class); //$NON-NLS-1$
         this.mountPage("session/edit", SessionEditorPage.class); //$NON-NLS-1$
-        mountResource("jquery", JavaScriptUtil.JQUERY_1_9_1_REFERENCE); //$NON-NLS-1$
+
+        this.mountPage("test/edit", TestEditorPage.class);
     }
 }
