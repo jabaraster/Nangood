@@ -8,19 +8,66 @@ iframe {
 }
 
 #content {
-	text-align: center;
+    text-align: center;
 }
 
 @swipe-area-width: 70%;
 @tank-area-width: 100% - @swipe-area-width - 5;
+@swipe-height: 50px;
+@rail-width: 400px;
+@rail-border: solid 1px rgba(100,100,100,.3);
+@swipe-area-bottom: 40px;
 
 #swipeArea {
-	border: @debug-border;
-	width: @swipe-area-width;
-	display: inline-block;
+    position: absolute;
+    margin-left: 10px;
+    left: 0px;
+    bottom: @swipe-area-bottom;
+    width: @swipe-area-width;
+    display: inline-block;
+}
+#rail {
+    position: absolute;
+
+    width: @rail-width;
+    height: 10px;
+
+    .gradient();
+    box-shadow: rgba(0,0,0,.3) 1px 1px;
+
+    .gradient(rgba(200,200,200,1),rgba(255,255,255,1));
+    box-shadow: rgba(0,0,0,.3) 1px 1px;
+    border: @rail-border;
+    border-radius: @border-radius-small;
+
+    z-index: 1;
+
+    top: 10px;
+}
+#toggle {
+    position: absolute;
+
+    width: 32px;
+    height: 32px;
+    left: 0px;
+
+    .gradient();
+    box-shadow: rgba(0,0,0,.3) 1px 1px;
+    border: @rail-border;
+    .round();
+
+    z-index: 10;
 }
 
 #tank {
-	border: @debug-border;
-	width: @tank-area-width;
+    position: absolute;
+    bottom: @swipe-area-bottom - 20;
+    left: @rail-width + 20;
+
+    border: @rail-border;
+    border-radius: @border-radius-small;
+    .gradient();
+
+    padding: 5px;
 }
+
